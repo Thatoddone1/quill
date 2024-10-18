@@ -9,50 +9,60 @@ import SwiftUI
 
 
 
-func fetchQuote(completionHandler: @escaping (String, String) -> Void) {
-    let url = URL(string: "https://api.quotable.io/quotes/random")!
-
-    let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-        if let error = error {
-            print("Error fetching quote: \(error)")
-            return
-        }
-        
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode) else {
-            print("Error with the response, unexpected status code: \(String(describing: response))")
-            return
-        }
-
-        if let data = data,
-           let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-           let content = json["content"] as? String,
-           let author = json["author"] as? String {
-            completionHandler(content, author)
-        }
-    })
-    task.resume()
-}
-
-
-
+let quote = [["To be or not to be, that is the question.", "William Shakespear"], ["The only thing we have to fear is fear itself.", "Franklin D. Rosevelt"]]
 
 struct ContentView: View {
+    @State private var currentQuote: String = ""
+    @State private var currentAuthor: String = ""
+    
     var body: some View {
-
-        let quote = "TEST QUOTE"
-        VStack{
+        VStack {
             Spacer()
-            Text(quote)
-                .padding(10)
-                .padding(.bottom, 30)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .fontDesign(.rounded)
-           Spacer()
+            VStack {
+                Text(currentQuote)
+                    .padding(10)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .fontDesign(.rounded)
+                    .animation(.easeInOut(duration: 0.5), value: currentQuote)
+                HStack {
+                    Text(currentAuthor)
+                        .padding(.leading, 20)
+                        .fontWeight(.light)
+                        .fontDesign(.rounded)
+                        .animation(.easeInOut(duration: 0.5), value: currentAuthor)
+                    Spacer()
+                }
+            }
+            Spacer()
+        }
+        .onTapGesture {
+            updateQuote()
+        }
+        .onAppear {
+            updateQuote()
+        }
+    }
+
+    
+    private func updateQuote() {
+        if let newQuote = newQuote(quote: quote) {
+            if newQuote[0] != currentQuote{
+                withAnimation {
+                    currentQuote = newQuote[0]
+                    currentAuthor = newQuote[1]
+                }
+            }
         }
     }
 }
+
+
+
+func newQuote(quote: [[String]]) -> [String]? {
+    return quote.randomElement()
+}
+
 
 #Preview {
     ContentView()
