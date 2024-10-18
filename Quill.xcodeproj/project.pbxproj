@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A32C61B2CC2EEBB006E2710 /* quotes.json in Resources */ = {isa = PBXBuildFile; fileRef = 6A32C61A2CC2EEBB006E2710 /* quotes.json */; };
 		6AFA566F2C51EA6C009F8C8E /* QuillApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFA566E2C51EA6C009F8C8E /* QuillApp.swift */; };
 		6AFA56712C51EA6C009F8C8E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFA56702C51EA6C009F8C8E /* ContentView.swift */; };
 		6AFA56732C51EA6E009F8C8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AFA56722C51EA6E009F8C8E /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6A32C61A2CC2EEBB006E2710 /* quotes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = quotes.json; sourceTree = "<group>"; };
 		6AFA566B2C51EA6C009F8C8E /* Quill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quill.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AFA566E2C51EA6C009F8C8E /* QuillApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuillApp.swift; sourceTree = "<group>"; };
 		6AFA56702C51EA6C009F8C8E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			children = (
 				6AFA566E2C51EA6C009F8C8E /* QuillApp.swift */,
 				6AFA56702C51EA6C009F8C8E /* ContentView.swift */,
+				6A32C61A2CC2EEBB006E2710 /* quotes.json */,
 				6AFA56722C51EA6E009F8C8E /* Assets.xcassets */,
 				6AFA56742C51EA6E009F8C8E /* Preview Content */,
 			);
@@ -127,6 +130,7 @@
 			files = (
 				6AFA56762C51EA6E009F8C8E /* Preview Assets.xcassets in Resources */,
 				6AFA56732C51EA6E009F8C8E /* Assets.xcassets in Resources */,
+				6A32C61B2CC2EEBB006E2710 /* quotes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

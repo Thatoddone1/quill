@@ -1,36 +1,33 @@
-//
-//  ContentView.swift
-//  Quill
-//
-//  Created by Joshua Kellman on 7/24/24.
-//
-
 import SwiftUI
 
+struct Quote: Codable, Equatable {
+    let quoteText: String
+    let quoteAuthor: String
+}
 
-
-let quote = [["To be or not to be, that is the question.", "William Shakespear"], ["The only thing we have to fear is fear itself.", "Franklin D. Rosevelt"]]
 
 struct ContentView: View {
-    @State private var currentQuote: String = ""
-    @State private var currentAuthor: String = ""
+    @State private var quotes: [Quote] = []
+    @State private var currentQuote: Quote?
     
     var body: some View {
         VStack {
             Spacer()
             VStack {
-                Text(currentQuote)
+                Text(currentQuote?.quoteText ?? "")
                     .padding(10)
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .fontDesign(.rounded)
-                    .animation(.easeInOut(duration: 0.5), value: currentQuote)
+                    .animation(.easeInOut(duration: 0.5), value: currentQuote?.quoteText)
+                    .multilineTextAlignment(.center)
                 HStack {
-                    Text(currentAuthor)
-                        .padding(.leading, 20)
-                        .fontWeight(.light)
+                    Spacer()
+                    Text(currentQuote?.quoteAuthor ?? "Unknown")
+                        .fontWeight(.bold)
                         .fontDesign(.rounded)
-                        .animation(.easeInOut(duration: 0.5), value: currentAuthor)
+                        .font(.subheadline)
+                        .animation(.easeInOut(duration: 0.5), value: currentQuote?.quoteAuthor)
                     Spacer()
                 }
             }
@@ -40,29 +37,31 @@ struct ContentView: View {
             updateQuote()
         }
         .onAppear {
+            loadQuotes()
             updateQuote()
         }
     }
-
     
-    private func updateQuote() {
-        if let newQuote = newQuote(quote: quote) {
-            if newQuote[0] != currentQuote{
-                withAnimation {
-                    currentQuote = newQuote[0]
-                    currentAuthor = newQuote[1]
-                }
+    private func loadQuotes() {
+        if let url = Bundle.main.url(forResource: "quotes", withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: url)
+                quotes = try JSONDecoder().decode([Quote].self, from: data)
+            } catch {
+                print("Error loading quotes: \(error)")
             }
         }
     }
+    
+    private func updateQuote() {
+        if let newQuote = quotes.randomElement(), newQuote != currentQuote {
+            withAnimation {
+                currentQuote = newQuote
+            }
+        }
+    }
+
 }
-
-
-
-func newQuote(quote: [[String]]) -> [String]? {
-    return quote.randomElement()
-}
-
 
 #Preview {
     ContentView()
