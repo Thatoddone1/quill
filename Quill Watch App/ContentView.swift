@@ -5,35 +5,32 @@ struct Quote: Codable, Equatable {
     let quoteAuthor: String
 }
 
-
 struct ContentView: View {
     @State private var quotes: [Quote] = []
     @State private var currentQuote: Quote?
     
     var body: some View {
-        VStack {
-            Spacer()
-            VStack {
-                Text(currentQuote?.quoteText ?? "")
-                    .padding(10)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .fontDesign(.rounded)
-                    .animation(.easeInOut(duration: 0.5), value: currentQuote?.quoteText)
-                    .multilineTextAlignment(.center)
-                HStack {
-                    Spacer()
-                    Text(currentQuote?.quoteAuthor.isEmpty == false ? currentQuote!.quoteAuthor : "Unknown")
-
+        ScrollView {
+                VStack {
+                    Text(currentQuote?.quoteText ?? "")
+                        .padding(3)
+                        .font(.headline)
                         .fontWeight(.bold)
                         .fontDesign(.rounded)
-                        .font(.subheadline)
-                        .animation(.easeInOut(duration: 0.5), value: currentQuote?.quoteAuthor)
-                    Spacer()
+                        .animation(.easeInOut(duration: 0.5), value: currentQuote?.quoteText)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil) // Allow unlimited lines
+                    HStack {
+                        Spacer()
+                        Text(currentQuote?.quoteAuthor.isEmpty == false ? currentQuote!.quoteAuthor : "Unknown")
+                            .fontWeight(.thin)
+                            .fontDesign(.rounded)
+                            .font(.subheadline)
+                            .animation(.easeInOut(duration: 0.5), value: currentQuote?.quoteAuthor)
+                        Spacer()
+                    }
                 }
             }
-            Spacer()
-        }
         .onTapGesture {
             updateQuote()
         }
@@ -61,7 +58,6 @@ struct ContentView: View {
             }
         }
     }
-
 }
 
 #Preview {
